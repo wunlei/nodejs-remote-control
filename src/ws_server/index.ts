@@ -1,5 +1,6 @@
 import { createWebSocketStream, WebSocket } from "ws";
-import { mouseAction, mouseCommands } from "./components/mouse";
+import { drawAction, drawCommands } from "./components/Draw";
+import { mouseAction, mouseCommands } from "./components/Mouse";
 
 export function wsStream(ws: WebSocket) {
   const duplex = createWebSocketStream(ws, {
@@ -14,6 +15,8 @@ export function wsStream(ws: WebSocket) {
 
     if (mouseCommands.includes(command)) {
       mouseAction(command, commandArgs, duplex);
+    } else if (drawCommands.includes(command)) {
+      drawAction(command, commandArgs, duplex);
     }
   });
 
