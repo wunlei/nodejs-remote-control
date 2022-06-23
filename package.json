@@ -2,8 +2,8 @@
   "name": "nodejs-remote-control",
   "version": "1.0.0",
   "scripts": {
-    "start:dev": "nodemon",
-    "start:prod": "tsc && node build/index.js"
+    "start:dev": "cross-env nodemon",
+    "start:prod": "cross-env tsc && node build/index.js"
   },
   "devDependencies": {
     "@types/ws": "^8.5.3",
