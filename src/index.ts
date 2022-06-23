@@ -2,7 +2,7 @@ import "dotenv/config";
 import { httpServer } from "./http_server/index";
 import WebSocket, { WebSocketServer } from "ws";
 import { HTTP_PORT_DEFAULT, WS_PORT_DEFAULT } from "./constants/index";
-import { wsStream } from "./ws_server";
+import { wsStream } from "./ws_server/wsStream";
 
 const HTTP_PORT = process.env.HTTP_PORT || HTTP_PORT_DEFAULT;
 const WS_PORT = Number(process.env.WS_PORT) || WS_PORT_DEFAULT;
@@ -13,8 +13,8 @@ httpServer.listen(HTTP_PORT);
 
 export const wsServer = new WebSocketServer({ port: WS_PORT });
 
-wsServer.on("connection", function connection(ws) {
-  console.log("Client connected");
+wsServer.on("connection", function connection(ws, request) {
+  console.log(`Client connected: ${request.socket.remoteAddress}:${request.socket.remotePort}`);
   wsStream(ws);
 
   ws.on("close", () => {
